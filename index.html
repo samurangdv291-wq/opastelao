@@ -18,12 +18,19 @@ body {
     top: 0;
     width: 100%;
     background: white;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* espaço entre a imagem e o texto */
     padding: 15px;
     font-size: 24px;
     font-weight: bold;
     transition: transform 0.3s ease;
     z-index: 1000;
+}
+
+#logo img {
+    height: 40px; /* tamanho da logo */
 }
 
 /* CONTAINER */
@@ -192,7 +199,10 @@ select, input {
 
 <body>
 
-<div id="logo">🥟 O PASTELÃO</div>
+<div id="logo">
+  <img src="imagens/logo.jpeg" alt="Logo O Pastelão">
+  <span>O PASTELÃO</span>
+</div>
 
 <div id="categories">
   <button onclick="scrollToSection('tradicionais')">🥟 Tradicionais</button>
@@ -970,7 +980,6 @@ window.addEventListener('scroll', function() {
 
 </body>
 </html>
-
 
 
 
