@@ -29,7 +29,7 @@ body {
 
 /* CONTAINER */
 .container {
-    padding: 120px 15px 20px;
+    padding: 170px 15px 20px;
     max-width: 500px;
     margin: auto;
 }
@@ -150,6 +150,44 @@ select, input {
   text-align: center;
 }
 
+#categories {
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#categories button {
+  background: #ff9800;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#categories button:hover {
+  background: #e68900;
+}
+
+#categories.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#categories {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 </style>
 </head>
 
@@ -157,12 +195,23 @@ select, input {
 
 <div id="logo">🥟 O PASTELÃO</div>
 
+<div id="categories">
+  <button onclick="scrollToSection('tradicionais')">🥟 Tradicionais</button>
+  <button onclick="scrollToSection('duplos')">🧀 Duplos</button>
+  <button onclick="scrollToSection('triplos')">🔥 Triplos</button>
+  <button onclick="scrollToSection('especiais')">⭐ Especiais</button>
+  <button onclick="scrollToSection('doces')">🍫 Doces</button>
+  <button onclick="scrollToSection('bebidas')">🥤 Bebidas</button>
+
+</div>
+
+
 <div class="container">
 
 <!-- CARDÁPIO -->
 
 <!-- SABOR (Básicos) -->
-<div class="section">
+<div class="section" id="tradicionais">
 <h2>🥟 Pastéis Tradicionais</h2>
 
 <div class="item">
@@ -192,6 +241,9 @@ select, input {
 <div class="size-row"><span>M - R$16,00</span><div class="controls"><button onclick="addItem('Presunto M', 16)">+</button><span id="Presunto M">0</span><button onclick="removeItem('Presunto M')">-</button></div></div>
 <div class="size-row"><span>G - R$33,00</span><div class="controls"><button onclick="addItem('Presunto G', 33)">+</button><span id="Presunto G">0</span><button onclick="removeItem('Presunto G')">-</button></div></div>
 </div>
+
+<div class="section" id="duplos">
+<h2>🧀 Pastéis Duplos</h2>
 
 <div class="item">
 <div class="item-header">Pizza</div>
@@ -325,6 +377,9 @@ select, input {
 <div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Milho c/ Cream Cheese M', 20)">+</button><span id="Milho c/ Cream Cheese M">0</span><button onclick="removeItem('Milho c/ Cream Cheese M')">-</button></div></div>
 <div class="size-row"><span>G - R$37,00</span><div class="controls"><button onclick="addItem('Milho c/ Cream Cheese G', 37)">+</button><span id="Milho c/ Cream Cheese G">0</span><button onclick="removeItem('Milho c/ Cream Cheese G')">-</button></div></div>
 </div>
+
+<div class="section" id="triplos">
+<h2>🔥 Pastéis Triplos</h2>
 
 <div class="item">
 <div class="item-header">Carne, Frango e Queijo</div>
@@ -462,7 +517,7 @@ select, input {
 </div>
 
 <!-- ESPECIAIS -->
-<div class="section">
+<div class="section" id="especiais">
 <h2>⭐ Pastéis Especiais</h2>
 
 <div class="item">
@@ -538,7 +593,7 @@ select, input {
 </div>
 
 <!-- DOCES -->
-<div class="section">
+<div class="section" id="doces">
 <h2>🍫 Pastéis Doces</h2>
 
 <div class="item">
@@ -614,8 +669,8 @@ select, input {
 </div>
 
 <!-- BEBIDAS -->
-<div class="section">
-<h2>🥤 Bebidas</h2>
+<div class="section" id="bebidas">
+  <h2>🥤 Bebidas</h2>
 
 <div class="item">
 <div class="size-row">
@@ -888,6 +943,30 @@ if (nome) {
   const telefone = "5527996348155"; // O PASTELÃO
   window.open(`https://wa.me/${telefone}?text=${msg}`, "_blank");
 }
+
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+// Controlar visibilidade da barra de categorias ao rolar
+let lastScrollTop = 0;
+const categoriesBar = document.getElementById('categories');
+
+window.addEventListener('scroll', function() {
+  let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  
+  if (currentScroll > lastScrollTop) {
+    // Scrollando para baixo - ocultar
+    categoriesBar.classList.add('hidden');
+  } else {
+    // Scrollando para cima - mostrar
+    categoriesBar.classList.remove('hidden');
+  }
+  
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});
 </script>
 
 </body>
