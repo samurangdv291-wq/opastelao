@@ -6,14 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* LOGO */
-#logo {
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ecc77779;
+}
+
+/* HEADER */
+#header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -21,177 +26,407 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* espaço entre a imagem e o texto */
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    transition: transform 0.3s ease;
+    padding: 10px 15px;
     z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#logo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 #logo img {
-    height: 40px; /* tamanho da logo */
+    height: 40px;
 }
 
-/* CONTAINER */
-.container {
-    padding: 170px 15px 20px;
+#logo span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* BOTÃO FLUTUANTE DO CARRINHO */
+#carrinho-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #ff9800;
+    border: none;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 24px;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#carrinho-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 152, 0, 0.6);
+}
+
+#carrinho-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #d32f2f;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* CATEGORIAS */
+.categorias-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 90px 15px 20px;
     max-width: 500px;
     margin: auto;
 }
 
-/* SEÇÕES */
-.section {
-    margin-bottom: 25px;
-}
-
-.section h2 {
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
-}
-
-/* ITEM */
-.item {
+.categoria-card {
     background: white;
-    padding: 10px;
-    margin-top: 8px;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.item-header {
-    display: flex;
-    justify-content: space-between;
+.categoria-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.categoria-card .emoji {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.categoria-card h3 {
+    font-size: 16px;
+    color: #333;
+}
+
+/* VISTA DE PRODUTOS */
+#produtos-view {
+    display: none;
+    padding: 90px 15px 150px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.voltar-btn {
+    background: #f8df00;
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
     font-weight: bold;
 }
 
-.size-row {
+.produtos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.produto-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.produto-nome {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.produto-descricao {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.tamanho-row {
     display: flex;
     justify-content: space-between;
-    margin-top: 8px;
     align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.controls {
+.tamanho-row:last-child {
+    border-bottom: none;
+}
+
+.tamanho-info {
+    flex: 1;
+}
+
+.tamanho-nome {
+    font-weight: 600;
+    color: #333;
+}
+
+.tamanho-preco {
+    color: #ff9800;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.controles {
     display: flex;
-    align-items: center;
     gap: 8px;
+    align-items: center;
 }
 
-button {
+.controles button {
     background: #ff9800;
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.controles span {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* CARRINHO */
+#carrinho-view {
+    display: none;
+    padding: 90px 15px 150px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.carrinho-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-nome {
+    font-weight: bold;
+    color: #333;
+}
+
+.item-preco {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.item-qtd {
+    color: #999;
+    font-size: 13px;
+}
+
+.item-remover {
+    background: #d32f2f;
     border: none;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 12px;
 }
 
-/* FORM */
-select, input {
+.carrinho-vazio {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+/* FORMULÁRIO */
+.form-section {
+    background: white;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+    margin-bottom: 12px;
+    color: #333;
+}
+
+input, select {
     width: 100%;
     padding: 10px;
-    margin-top: 8px;
-    border-radius: 5px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
-/* FINAL */
-#finalizar {
+input:last-child, select:last-child {
+    margin-bottom: 0;
+}
+
+.endereco-hidden {
+    display: none;
+}
+
+/* RESUMO */
+.resumo {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+}
+
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.resumo-linha:last-child {
+    border-bottom: none;
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+
+.resumo-label {
+    color: #666;
+}
+
+.resumo-valor {
+    font-weight: bold;
+    color: #333;
+}
+
+.resumo-total {
+    font-size: 18px;
+    color: #ff9800;
+}
+
+/* BOTÕES */
+.btn-finalizar {
     background: green;
+    border: none;
     color: white;
     padding: 15px;
-    border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btn-finalizar:hover {
+    background: #2e7d32;
+}
+
+.btn-finalizar:disabled {
+    background: #ccc;
+    cursor: not-allowed;
 }
 
 /* MODAL */
-#modal {
+.modal {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
     z-index: 2000;
+    align-items: center;
+    justify-content: center;
 }
 
-#modalBox {
+.modal-content {
     background: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.modal-buttons {
+.modal-titulo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.modal-botoes {
     display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.modal-buttons button {
-    width: 48%;
+.modal-botoes button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-/* MODAL PIX */
-#pixModal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 3000;
+.btn-voltar {
+    background: #999;
+    color: white;
 }
 
-#pixBox {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 90%;
-  text-align: center;
+.btn-confirmar {
+    background: green;
+    color: white;
 }
 
-#categories {
-  position: fixed;
-  top: 60px;
-  width: 100%;
-  background: white;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px;
-  z-index: 999;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-#categories button {
-  background: #ff9800;
-  border: none;
-  color: white;
-  padding: 2px 3px;
-  border-radius: 20px;
-  font-size: 11px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-#categories button:hover {
-  background: #e68900;
-}
-
-#categories.hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-#categories {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.pix-aviso {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    color: #856404;
 }
 
 </style>
@@ -199,791 +434,508 @@ select, input {
 
 <body>
 
-<div id="logo">
-  <img src="logo.jpeg" alt="Logo O Pastelão">
-  <span>O PASTELÃO</span>
-</div>
-
-<div id="categories">
-  <button onclick="scrollToSection('tradicionais')">🥟 Tradicionais</button>
-  <button onclick="scrollToSection('duplos')">🧀 Duplos</button>
-  <button onclick="scrollToSection('triplos')">🔥 Triplos</button>
-  <button onclick="scrollToSection('especiais')">⭐ Especiais</button>
-  <button onclick="scrollToSection('doces')">🍫 Doces</button>
-  <button onclick="scrollToSection('bebidas')">🥤 Bebidas</button>
-
-</div>
-
-
-<div class="container">
-
-<!-- CARDÁPIO -->
-
-<!-- SABOR (Básicos) -->
-<div class="section" id="tradicionais">
-<h2>🥟 Pastéis Tradicionais</h2>
-
-<div class="item">
-<div class="item-header">Carne</div>
-<div class="size-row"><span>P - R$12,00</span><div class="controls"><button onclick="addItem('Carne P', 12)">+</button><span id="Carne P">0</span><button onclick="removeItem('Carne P')">-</button></div></div>
-<div class="size-row"><span>M - R$16,00</span><div class="controls"><button onclick="addItem('Carne M', 16)">+</button><span id="Carne M">0</span><button onclick="removeItem('Carne M')">-</button></div></div>
-<div class="size-row"><span>G - R$33,00</span><div class="controls"><button onclick="addItem('Carne G', 33)">+</button><span id="Carne G">0</span><button onclick="removeItem('Carne G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango</div>
-<div class="size-row"><span>P - R$12,00</span><div class="controls"><button onclick="addItem('Frango P', 12)">+</button><span id="Frango P">0</span><button onclick="removeItem('Frango P')">-</button></div></div>
-<div class="size-row"><span>M - R$16,00</span><div class="controls"><button onclick="addItem('Frango M', 16)">+</button><span id="Frango M">0</span><button onclick="removeItem('Frango M')">-</button></div></div>
-<div class="size-row"><span>G - R$33,00</span><div class="controls"><button onclick="addItem('Frango G', 33)">+</button><span id="Frango G">0</span><button onclick="removeItem('Frango G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo</div>
-<div class="size-row"><span>P - R$12,00</span><div class="controls"><button onclick="addItem('Queijo P', 12)">+</button><span id="Queijo P">0</span><button onclick="removeItem('Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo M', 18)">+</button><span id="Queijo M">0</span><button onclick="removeItem('Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$33,00</span><div class="controls"><button onclick="addItem('Queijo G', 33)">+</button><span id="Queijo G">0</span><button onclick="removeItem('Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Presunto</div>
-<div class="size-row"><span>P - R$12,00</span><div class="controls"><button onclick="addItem('Presunto P', 12)">+</button><span id="Presunto P">0</span><button onclick="removeItem('Presunto P')">-</button></div></div>
-<div class="size-row"><span>M - R$16,00</span><div class="controls"><button onclick="addItem('Presunto M', 16)">+</button><span id="Presunto M">0</span><button onclick="removeItem('Presunto M')">-</button></div></div>
-<div class="size-row"><span>G - R$33,00</span><div class="controls"><button onclick="addItem('Presunto G', 33)">+</button><span id="Presunto G">0</span><button onclick="removeItem('Presunto G')">-</button></div></div>
-</div>
-
-<div class="section" id="duplos">
-<h2>🧀 Pastéis Duplos</h2>
-
-<div class="item">
-<div class="item-header">Pizza</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Pizza P', 14)">+</button><span id="Pizza P">0</span><button onclick="removeItem('Pizza P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Pizza M', 18)">+</button><span id="Pizza M">0</span><button onclick="removeItem('Pizza M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Pizza G', 35)">+</button><span id="Pizza G">0</span><button onclick="removeItem('Pizza G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Queijo</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Queijo P', 14)">+</button><span id="Carne c/ Queijo P">0</span><button onclick="removeItem('Carne c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Queijo M', 18)">+</button><span id="Carne c/ Queijo M">0</span><button onclick="removeItem('Carne c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Queijo G', 35)">+</button><span id="Carne c/ Queijo G">0</span><button onclick="removeItem('Carne c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Frango</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Frango P', 14)">+</button><span id="Carne c/ Frango P">0</span><button onclick="removeItem('Carne c/ Frango P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Frango M', 18)">+</button><span id="Carne c/ Frango M">0</span><button onclick="removeItem('Carne c/ Frango M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Frango G', 35)">+</button><span id="Carne c/ Frango G">0</span><button onclick="removeItem('Carne c/ Frango G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Palmito</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Palmito P', 14)">+</button><span id="Carne c/ Palmito P">0</span><button onclick="removeItem('Carne c/ Palmito P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Palmito M', 18)">+</button><span id="Carne c/ Palmito M">0</span><button onclick="removeItem('Carne c/ Palmito M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Palmito G', 35)">+</button><span id="Carne c/ Palmito G">0</span><button onclick="removeItem('Carne c/ Palmito G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Milho</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Milho P', 14)">+</button><span id="Carne c/ Milho P">0</span><button onclick="removeItem('Carne c/ Milho P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Milho M', 18)">+</button><span id="Carne c/ Milho M">0</span><button onclick="removeItem('Carne c/ Milho M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Milho G', 35)">+</button><span id="Carne c/ Milho G">0</span><button onclick="removeItem('Carne c/ Milho G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Banana</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Banana P', 14)">+</button><span id="Carne c/ Banana P">0</span><button onclick="removeItem('Carne c/ Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Banana M', 18)">+</button><span id="Carne c/ Banana M">0</span><button onclick="removeItem('Carne c/ Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Banana G', 35)">+</button><span id="Carne c/ Banana G">0</span><button onclick="removeItem('Carne c/ Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Catupiry</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Carne c/ Catupiry P', 14)">+</button><span id="Carne c/ Catupiry P">0</span><button onclick="removeItem('Carne c/ Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Carne c/ Catupiry M', 18)">+</button><span id="Carne c/ Catupiry M">0</span><button onclick="removeItem('Carne c/ Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Carne c/ Catupiry G', 35)">+</button><span id="Carne c/ Catupiry G">0</span><button onclick="removeItem('Carne c/ Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne c/ Cream Cheese</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne c/ Cream Cheese P', 16)">+</button><span id="Carne c/ Cream Cheese P">0</span><button onclick="removeItem('Carne c/ Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne c/ Cream Cheese M', 20)">+</button><span id="Carne c/ Cream Cheese M">0</span><button onclick="removeItem('Carne c/ Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$37,00</span><div class="controls"><button onclick="addItem('Carne c/ Cream Cheese G', 37)">+</button><span id="Carne c/ Cream Cheese G">0</span><button onclick="removeItem('Carne c/ Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango c/ Queijo</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Frango c/ Queijo P', 14)">+</button><span id="Frango c/ Queijo P">0</span><button onclick="removeItem('Frango c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Frango c/ Queijo M', 18)">+</button><span id="Frango c/ Queijo M">0</span><button onclick="removeItem('Frango c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Frango c/ Queijo G', 35)">+</button><span id="Frango c/ Queijo G">0</span><button onclick="removeItem('Frango c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango c/ Palmito</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Frango c/ Palmito P', 14)">+</button><span id="Frango c/ Palmito P">0</span><button onclick="removeItem('Frango c/ Palmito P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Frango c/ Palmito M', 18)">+</button><span id="Frango c/ Palmito M">0</span><button onclick="removeItem('Frango c/ Palmito M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Frango c/ Palmito G', 35)">+</button><span id="Frango c/ Palmito G">0</span><button onclick="removeItem('Frango c/ Palmito G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango c/ Banana</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Frango c/ Banana P', 14)">+</button><span id="Frango c/ Banana P">0</span><button onclick="removeItem('Frango c/ Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Frango c/ Banana M', 18)">+</button><span id="Frango c/ Banana M">0</span><button onclick="removeItem('Frango c/ Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Frango c/ Banana G', 35)">+</button><span id="Frango c/ Banana G">0</span><button onclick="removeItem('Frango c/ Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango c/ Catupiry</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Frango c/ Catupiry P', 14)">+</button><span id="Frango c/ Catupiry P">0</span><button onclick="removeItem('Frango c/ Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Frango c/ Catupiry M', 18)">+</button><span id="Frango c/ Catupiry M">0</span><button onclick="removeItem('Frango c/ Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Frango c/ Catupiry G', 35)">+</button><span id="Frango c/ Catupiry G">0</span><button onclick="removeItem('Frango c/ Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo c/ Banana</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Queijo c/ Banana P', 14)">+</button><span id="Queijo c/ Banana P">0</span><button onclick="removeItem('Queijo c/ Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo c/ Banana M', 18)">+</button><span id="Queijo c/ Banana M">0</span><button onclick="removeItem('Queijo c/ Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Queijo c/ Banana G', 35)">+</button><span id="Queijo c/ Banana G">0</span><button onclick="removeItem('Queijo c/ Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo c/ Palmito</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Queijo c/ Palmito P', 14)">+</button><span id="Queijo c/ Palmito P">0</span><button onclick="removeItem('Queijo c/ Palmito P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo c/ Palmito M', 18)">+</button><span id="Queijo c/ Palmito M">0</span><button onclick="removeItem('Queijo c/ Palmito M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Queijo c/ Palmito G', 35)">+</button><span id="Queijo c/ Palmito G">0</span><button onclick="removeItem('Queijo c/ Palmito G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo c/ Milho</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Queijo c/ Milho P', 14)">+</button><span id="Queijo c/ Milho P">0</span><button onclick="removeItem('Queijo c/ Milho P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo c/ Milho M', 18)">+</button><span id="Queijo c/ Milho M">0</span><button onclick="removeItem('Queijo c/ Milho M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Queijo c/ Milho G', 35)">+</button><span id="Queijo c/ Milho G">0</span><button onclick="removeItem('Queijo c/ Milho G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo c/ Catupiry</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Queijo c/ Catupiry P', 14)">+</button><span id="Queijo c/ Catupiry P">0</span><button onclick="removeItem('Queijo c/ Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo c/ Catupiry M', 18)">+</button><span id="Queijo c/ Catupiry M">0</span><button onclick="removeItem('Queijo c/ Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Queijo c/ Catupiry G', 35)">+</button><span id="Queijo c/ Catupiry G">0</span><button onclick="removeItem('Queijo c/ Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo c/ Cream Cheese</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Queijo c/ Cream Cheese P', 14)">+</button><span id="Queijo c/ Cream Cheese P">0</span><button onclick="removeItem('Queijo c/ Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Queijo c/ Cream Cheese M', 18)">+</button><span id="Queijo c/ Cream Cheese M">0</span><button onclick="removeItem('Queijo c/ Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Queijo c/ Cream Cheese G', 35)">+</button><span id="Queijo c/ Cream Cheese G">0</span><button onclick="removeItem('Queijo c/ Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Milho c/ Catupiry</div>
-<div class="size-row"><span>P - R$14,00</span><div class="controls"><button onclick="addItem('Milho c/ Catupiry P', 14)">+</button><span id="Milho c/ Catupiry P">0</span><button onclick="removeItem('Milho c/ Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Milho c/ Catupiry M', 18)">+</button><span id="Milho c/ Catupiry M">0</span><button onclick="removeItem('Milho c/ Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$35,00</span><div class="controls"><button onclick="addItem('Milho c/ Catupiry G', 35)">+</button><span id="Milho c/ Catupiry G">0</span><button onclick="removeItem('Milho c/ Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Milho c/ Cream Cheese</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Milho c/ Cream Cheese P', 16)">+</button><span id="Milho c/ Cream Cheese P">0</span><button onclick="removeItem('Milho c/ Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Milho c/ Cream Cheese M', 20)">+</button><span id="Milho c/ Cream Cheese M">0</span><button onclick="removeItem('Milho c/ Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$37,00</span><div class="controls"><button onclick="addItem('Milho c/ Cream Cheese G', 37)">+</button><span id="Milho c/ Cream Cheese G">0</span><button onclick="removeItem('Milho c/ Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="section" id="triplos">
-<h2>🔥 Pastéis Triplos</h2>
-
-<div class="item">
-<div class="item-header">Carne, Frango e Queijo</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Frango Queijo P', 16)">+</button><span id="Carne Frango Queijo P">0</span><button onclick="removeItem('Carne Frango Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Frango Queijo M', 20)">+</button><span id="Carne Frango Queijo M">0</span><button onclick="removeItem('Carne Frango Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Frango Queijo G', 36)">+</button><span id="Carne Frango Queijo G">0</span><button onclick="removeItem('Carne Frango Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Frango e Catupiry</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Frango Catupiry P', 16)">+</button><span id="Carne Frango Catupiry P">0</span><button onclick="removeItem('Carne Frango Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Frango Catupiry M', 20)">+</button><span id="Carne Frango Catupiry M">0</span><button onclick="removeItem('Carne Frango Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Frango Catupiry G', 36)">+</button><span id="Carne Frango Catupiry G">0</span><button onclick="removeItem('Carne Frango Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Frango e Cream Cheese</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Carne Frango Cream Cheese P', 18)">+</button><span id="Carne Frango Cream Cheese P">0</span><button onclick="removeItem('Carne Frango Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Carne Frango Cream Cheese M', 22)">+</button><span id="Carne Frango Cream Cheese M">0</span><button onclick="removeItem('Carne Frango Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Carne Frango Cream Cheese G', 38)">+</button><span id="Carne Frango Cream Cheese G">0</span><button onclick="removeItem('Carne Frango Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Frango e Palmito</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Frango Palmito P', 16)">+</button><span id="Carne Frango Palmito P">0</span><button onclick="removeItem('Carne Frango Palmito P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Frango Palmito M', 20)">+</button><span id="Carne Frango Palmito M">0</span><button onclick="removeItem('Carne Frango Palmito M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Frango Palmito G', 36)">+</button><span id="Carne Frango Palmito G">0</span><button onclick="removeItem('Carne Frango Palmito G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Frango e Banana</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Frango Banana P', 16)">+</button><span id="Carne Frango Banana P">0</span><button onclick="removeItem('Carne Frango Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Frango Banana M', 20)">+</button><span id="Carne Frango Banana M">0</span><button onclick="removeItem('Carne Frango Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Frango Banana G', 36)">+</button><span id="Carne Frango Banana G">0</span><button onclick="removeItem('Carne Frango Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Milho e Catupiry</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Milho Catupiry P', 16)">+</button><span id="Carne Milho Catupiry P">0</span><button onclick="removeItem('Carne Milho Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Milho Catupiry M', 20)">+</button><span id="Carne Milho Catupiry M">0</span><button onclick="removeItem('Carne Milho Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Milho Catupiry G', 36)">+</button><span id="Carne Milho Catupiry G">0</span><button onclick="removeItem('Carne Milho Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Milho e Cream Cheese</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Carne Milho Cream Cheese P', 18)">+</button><span id="Carne Milho Cream Cheese P">0</span><button onclick="removeItem('Carne Milho Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Carne Milho Cream Cheese M', 22)">+</button><span id="Carne Milho Cream Cheese M">0</span><button onclick="removeItem('Carne Milho Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Carne Milho Cream Cheese G', 38)">+</button><span id="Carne Milho Cream Cheese G">0</span><button onclick="removeItem('Carne Milho Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne, Milho e Queijo</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Carne Milho Queijo P', 16)">+</button><span id="Carne Milho Queijo P">0</span><button onclick="removeItem('Carne Milho Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Carne Milho Queijo M', 20)">+</button><span id="Carne Milho Queijo M">0</span><button onclick="removeItem('Carne Milho Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Carne Milho Queijo G', 36)">+</button><span id="Carne Milho Queijo G">0</span><button onclick="removeItem('Carne Milho Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Queijo e Banana</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Queijo Banana P', 16)">+</button><span id="Frango Queijo Banana P">0</span><button onclick="removeItem('Frango Queijo Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Queijo Banana M', 20)">+</button><span id="Frango Queijo Banana M">0</span><button onclick="removeItem('Frango Queijo Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Queijo Banana G', 36)">+</button><span id="Frango Queijo Banana G">0</span><button onclick="removeItem('Frango Queijo Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Palmito e Catupiry</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Palmito Catupiry P', 16)">+</button><span id="Frango Palmito Catupiry P">0</span><button onclick="removeItem('Frango Palmito Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Palmito Catupiry M', 20)">+</button><span id="Frango Palmito Catupiry M">0</span><button onclick="removeItem('Frango Palmito Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Palmito Catupiry G', 36)">+</button><span id="Frango Palmito Catupiry G">0</span><button onclick="removeItem('Frango Palmito Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Palmito e Cream Cheese</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Frango Palmito Cream Cheese P', 18)">+</button><span id="Frango Palmito Cream Cheese P">0</span><button onclick="removeItem('Frango Palmito Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Frango Palmito Cream Cheese M', 22)">+</button><span id="Frango Palmito Cream Cheese M">0</span><button onclick="removeItem('Frango Palmito Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Frango Palmito Cream Cheese G', 38)">+</button><span id="Frango Palmito Cream Cheese G">0</span><button onclick="removeItem('Frango Palmito Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Milho e Catupiry</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Milho Catupiry P', 16)">+</button><span id="Frango Milho Catupiry P">0</span><button onclick="removeItem('Frango Milho Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Milho Catupiry M', 20)">+</button><span id="Frango Milho Catupiry M">0</span><button onclick="removeItem('Frango Milho Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Milho Catupiry G', 36)">+</button><span id="Frango Milho Catupiry G">0</span><button onclick="removeItem('Frango Milho Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Milho e Cream Cheese</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Frango Milho Cream Cheese P', 18)">+</button><span id="Frango Milho Cream Cheese P">0</span><button onclick="removeItem('Frango Milho Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Frango Milho Cream Cheese M', 22)">+</button><span id="Frango Milho Cream Cheese M">0</span><button onclick="removeItem('Frango Milho Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Frango Milho Cream Cheese G', 38)">+</button><span id="Frango Milho Cream Cheese G">0</span><button onclick="removeItem('Frango Milho Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Queijo e Milho</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Queijo Milho P', 16)">+</button><span id="Frango Queijo Milho P">0</span><button onclick="removeItem('Frango Queijo Milho P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Queijo Milho M', 20)">+</button><span id="Frango Queijo Milho M">0</span><button onclick="removeItem('Frango Queijo Milho M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Queijo Milho G', 36)">+</button><span id="Frango Queijo Milho G">0</span><button onclick="removeItem('Frango Queijo Milho G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Queijo e Palmito</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Queijo Palmito P', 16)">+</button><span id="Frango Queijo Palmito P">0</span><button onclick="removeItem('Frango Queijo Palmito P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Queijo Palmito M', 20)">+</button><span id="Frango Queijo Palmito M">0</span><button onclick="removeItem('Frango Queijo Palmito M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Queijo Palmito G', 36)">+</button><span id="Frango Queijo Palmito G">0</span><button onclick="removeItem('Frango Queijo Palmito G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Queijo e Catupiry</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango Queijo Catupiry P', 16)">+</button><span id="Frango Queijo Catupiry P">0</span><button onclick="removeItem('Frango Queijo Catupiry P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango Queijo Catupiry M', 20)">+</button><span id="Frango Queijo Catupiry M">0</span><button onclick="removeItem('Frango Queijo Catupiry M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Frango Queijo Catupiry G', 36)">+</button><span id="Frango Queijo Catupiry G">0</span><button onclick="removeItem('Frango Queijo Catupiry G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango, Queijo e Cream Cheese</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Frango Queijo Cream Cheese P', 18)">+</button><span id="Frango Queijo Cream Cheese P">0</span><button onclick="removeItem('Frango Queijo Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Frango Queijo Cream Cheese M', 22)">+</button><span id="Frango Queijo Cream Cheese M">0</span><button onclick="removeItem('Frango Queijo Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Frango Queijo Cream Cheese G', 38)">+</button><span id="Frango Queijo Cream Cheese G">0</span><button onclick="removeItem('Frango Queijo Cream Cheese G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Pizza c/ Frango</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Pizza c/ Frango P', 16)">+</button><span id="Pizza c/ Frango P">0</span><button onclick="removeItem('Pizza c/ Frango P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Pizza c/ Frango M', 20)">+</button><span id="Pizza c/ Frango M">0</span><button onclick="removeItem('Pizza c/ Frango M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Pizza c/ Frango G', 36)">+</button><span id="Pizza c/ Frango G">0</span><button onclick="removeItem('Pizza c/ Frango G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Frango c/ Cream Cheese</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Frango c/ Cream Cheese P', 16)">+</button><span id="Frango c/ Cream Cheese P">0</span><button onclick="removeItem('Frango c/ Cream Cheese P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Frango c/ Cream Cheese M', 20)">+</button><span id="Frango c/ Cream Cheese M">0</span><button onclick="removeItem('Frango c/ Cream Cheese M')">-</button></div></div>
-<div class="size-row"><span>G - R$37,00</span><div class="controls"><button onclick="addItem('Frango c/ Cream Cheese G', 37)">+</button><span id="Frango c/ Cream Cheese G">0</span><button onclick="removeItem('Frango c/ Cream Cheese G')">-</button></div></div>
-</div>
-
-</div>
-
-<!-- ESPECIAIS -->
-<div class="section" id="especiais">
-<h2>⭐ Pastéis Especiais</h2>
-
-<div class="item">
-<div class="item-header">Costela</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Costela P', 16)">+</button><span id="Costela P">0</span><button onclick="removeItem('Costela P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Costela M', 20)">+</button><span id="Costela M">0</span><button onclick="removeItem('Costela M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Costela G', 38)">+</button><span id="Costela G">0</span><button onclick="removeItem('Costela G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Costela c/ Queijo</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Costela c/ Queijo P', 18)">+</button><span id="Costela c/ Queijo P">0</span><button onclick="removeItem('Costela c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Costela c/ Queijo M', 22)">+</button><span id="Costela c/ Queijo M">0</span><button onclick="removeItem('Costela c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Costela c/ Queijo G', 38)">+</button><span id="Costela c/ Queijo G">0</span><button onclick="removeItem('Costela c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Carne Especial</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Carne Especial P', 18)">+</button><span id="Carne Especial P">0</span><button onclick="removeItem('Carne Especial P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Carne Especial M', 22)">+</button><span id="Carne Especial M">0</span><button onclick="removeItem('Carne Especial M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Carne Especial G', 38)">+</button><span id="Carne Especial G">0</span><button onclick="removeItem('Carne Especial G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Torta Capixaba</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Torta Capixaba P', 16)">+</button><span id="Torta Capixaba P">0</span><button onclick="removeItem('Torta Capixaba P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Torta Capixaba M', 22)">+</button><span id="Torta Capixaba M">0</span><button onclick="removeItem('Torta Capixaba M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Torta Capixaba G', 38)">+</button><span id="Torta Capixaba G">0</span><button onclick="removeItem('Torta Capixaba G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Portuguesa</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Portuguesa P', 18)">+</button><span id="Portuguesa P">0</span><button onclick="removeItem('Portuguesa P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Portuguesa M', 22)">+</button><span id="Portuguesa M">0</span><button onclick="removeItem('Portuguesa M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Portuguesa G', 38)">+</button><span id="Portuguesa G">0</span><button onclick="removeItem('Portuguesa G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Moda da Casa</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Moda da Casa P', 18)">+</button><span id="Moda da Casa P">0</span><button onclick="removeItem('Moda da Casa P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Moda da Casa M', 22)">+</button><span id="Moda da Casa M">0</span><button onclick="removeItem('Moda da Casa M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Moda da Casa G', 38)">+</button><span id="Moda da Casa G">0</span><button onclick="removeItem('Moda da Casa G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Nordestino</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Nordestino P', 18)">+</button><span id="Nordestino P">0</span><button onclick="removeItem('Nordestino P')">-</button></div></div>
-<div class="size-row"><span>M - R$22,00</span><div class="controls"><button onclick="addItem('Nordestino M', 22)">+</button><span id="Nordestino M">0</span><button onclick="removeItem('Nordestino M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Nordestino G', 38)">+</button><span id="Nordestino G">0</span><button onclick="removeItem('Nordestino G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Queijo e Cia</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Queijo e Cia P', 18)">+</button><span id="Queijo e Cia P">0</span><button onclick="removeItem('Queijo e Cia P')">-</button></div></div>
-<div class="size-row"><span>M - R$24,00</span><div class="controls"><button onclick="addItem('Queijo e Cia M', 24)">+</button><span id="Queijo e Cia M">0</span><button onclick="removeItem('Queijo e Cia M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Queijo e Cia G', 38)">+</button><span id="Queijo e Cia G">0</span><button onclick="removeItem('Queijo e Cia G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Atum Especial</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Atum Especial P', 18)">+</button><span id="Atum Especial P">0</span><button onclick="removeItem('Atum Especial P')">-</button></div></div>
-<div class="size-row"><span>M - R$25,00</span><div class="controls"><button onclick="addItem('Atum Especial M', 25)">+</button><span id="Atum Especial M">0</span><button onclick="removeItem('Atum Especial M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Atum Especial G', 38)">+</button><span id="Atum Especial G">0</span><button onclick="removeItem('Atum Especial G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Atum à Moda</div>
-<div class="size-row"><span>P - R$18,00</span><div class="controls"><button onclick="addItem('Atum a Moda P', 18)">+</button><span id="Atum a Moda P">0</span><button onclick="removeItem('Atum a Moda P')">-</button></div></div>
-<div class="size-row"><span>M - R$25,00</span><div class="controls"><button onclick="addItem('Atum a Moda M', 25)">+</button><span id="Atum a Moda M">0</span><button onclick="removeItem('Atum a Moda M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Atum a Moda G', 38)">+</button><span id="Atum a Moda G">0</span><button onclick="removeItem('Atum a Moda G')">-</button></div></div>
-</div>
-
-</div>
-
-<!-- DOCES -->
-<div class="section" id="doces">
-<h2>🍫 Pastéis Doces</h2>
-
-<div class="item">
-<div class="item-header">Romeu e Julieta</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Romeu e Julieta P', 16)">+</button><span id="Romeu e Julieta P">0</span><button onclick="removeItem('Romeu e Julieta P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Romeu e Julieta M', 20)">+</button><span id="Romeu e Julieta M">0</span><button onclick="removeItem('Romeu e Julieta M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Romeu e Julieta G', 36)">+</button><span id="Romeu e Julieta G">0</span><button onclick="removeItem('Romeu e Julieta G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Doce de Leite</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Doce de Leite P', 16)">+</button><span id="Doce de Leite P">0</span><button onclick="removeItem('Doce de Leite P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Doce de Leite M', 20)">+</button><span id="Doce de Leite M">0</span><button onclick="removeItem('Doce de Leite M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Doce de Leite G', 36)">+</button><span id="Doce de Leite G">0</span><button onclick="removeItem('Doce de Leite G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Doce de Leite c/ Queijo</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Doce de Leite c/ Queijo P', 16)">+</button><span id="Doce de Leite c/ Queijo P">0</span><button onclick="removeItem('Doce de Leite c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Doce de Leite c/ Queijo M', 20)">+</button><span id="Doce de Leite c/ Queijo M">0</span><button onclick="removeItem('Doce de Leite c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Doce de Leite c/ Queijo G', 36)">+</button><span id="Doce de Leite c/ Queijo G">0</span><button onclick="removeItem('Doce de Leite c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Nutella</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Nutella P', 16)">+</button><span id="Nutella P">0</span><button onclick="removeItem('Nutella P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Nutella M', 20)">+</button><span id="Nutella M">0</span><button onclick="removeItem('Nutella M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Nutella G', 36)">+</button><span id="Nutella G">0</span><button onclick="removeItem('Nutella G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Nutella c/ Queijo</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Nutella c/ Queijo P', 16)">+</button><span id="Nutella c/ Queijo P">0</span><button onclick="removeItem('Nutella c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$23,00</span><div class="controls"><button onclick="addItem('Nutella c/ Queijo M', 23)">+</button><span id="Nutella c/ Queijo M">0</span><button onclick="removeItem('Nutella c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$38,00</span><div class="controls"><button onclick="addItem('Nutella c/ Queijo G', 38)">+</button><span id="Nutella c/ Queijo G">0</span><button onclick="removeItem('Nutella c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Chocolate</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Chocolate P', 16)">+</button><span id="Chocolate P">0</span><button onclick="removeItem('Chocolate P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Chocolate M', 20)">+</button><span id="Chocolate M">0</span><button onclick="removeItem('Chocolate M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Chocolate G', 36)">+</button><span id="Chocolate G">0</span><button onclick="removeItem('Chocolate G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Chocolate c/ Queijo</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Chocolate c/ Queijo P', 16)">+</button><span id="Chocolate c/ Queijo P">0</span><button onclick="removeItem('Chocolate c/ Queijo P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Chocolate c/ Queijo M', 20)">+</button><span id="Chocolate c/ Queijo M">0</span><button onclick="removeItem('Chocolate c/ Queijo M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Chocolate c/ Queijo G', 36)">+</button><span id="Chocolate c/ Queijo G">0</span><button onclick="removeItem('Chocolate c/ Queijo G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Chocolate, Queijo e Banana</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Chocolate Queijo Banana P', 16)">+</button><span id="Chocolate Queijo Banana P">0</span><button onclick="removeItem('Chocolate Queijo Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Chocolate Queijo Banana M', 20)">+</button><span id="Chocolate Queijo Banana M">0</span><button onclick="removeItem('Chocolate Queijo Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Chocolate Queijo Banana G', 36)">+</button><span id="Chocolate Queijo Banana G">0</span><button onclick="removeItem('Chocolate Queijo Banana G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Banana Real</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Banana Real P', 16)">+</button><span id="Banana Real P">0</span><button onclick="removeItem('Banana Real P')">-</button></div></div>
-<div class="size-row"><span>M - R$18,00</span><div class="controls"><button onclick="addItem('Banana Real M', 18)">+</button><span id="Banana Real M">0</span><button onclick="removeItem('Banana Real M')">-</button></div></div>
-<div class="size-row"><span>G - R$30,00</span><div class="controls"><button onclick="addItem('Banana Real G', 30)">+</button><span id="Banana Real G">0</span><button onclick="removeItem('Banana Real G')">-</button></div></div>
-</div>
-
-<div class="item">
-<div class="item-header">Nutella c/ Banana</div>
-<div class="size-row"><span>P - R$16,00</span><div class="controls"><button onclick="addItem('Nutella c/ Banana P', 16)">+</button><span id="Nutella c/ Banana P">0</span><button onclick="removeItem('Nutella c/ Banana P')">-</button></div></div>
-<div class="size-row"><span>M - R$20,00</span><div class="controls"><button onclick="addItem('Nutella c/ Banana M', 20)">+</button><span id="Nutella c/ Banana M">0</span><button onclick="removeItem('Nutella c/ Banana M')">-</button></div></div>
-<div class="size-row"><span>G - R$36,00</span><div class="controls"><button onclick="addItem('Nutella c/ Banana G', 36)">+</button><span id="Nutella c/ Banana G">0</span><button onclick="removeItem('Nutella c/ Banana G')">-</button></div></div>
-</div>
-
-</div>
-
-<!-- BEBIDAS -->
-<div class="section" id="bebidas">
-  <h2>🥤 Bebidas</h2>
-
-<div class="item">
-<div class="size-row">
-<span>Refrigerante - R$5,00</span>
-<div class="controls">
-<button onclick="addItem('Refrigerante', 5)">+</button>
-<span id="Refrigerante">0</span>
-<button onclick="removeItem('Refrigerante')">-</button>
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- CALDO DE CANA -->
-<div class="section">
-<h2>🌾 Caldo de Cana</h2>
-
-<div class="item">
-<div class="size-row">
-<span>300ml - R$7,00</span>
-<div class="controls">
-<button onclick="addItem('Caldo de Cana 300ml', 7)">+</button>
-<span id="Caldo de Cana 300ml">0</span>
-<button onclick="removeItem('Caldo de Cana 300ml')">-</button>
-</div>
-</div>
-</div>
-
-<div class="item">
-<div class="size-row">
-<span>400ml - R$8,00</span>
-<div class="controls">
-<button onclick="addItem('Caldo de Cana 400ml', 8)">+</button>
-<span id="Caldo de Cana 400ml">0</span>
-<button onclick="removeItem('Caldo de Cana 400ml')">-</button>
-</div>
-</div>
-</div>
-
-<div class="item">
-<div class="size-row">
-<span>500ml - R$9,00</span>
-<div class="controls">
-<button onclick="addItem('Caldo de Cana 500ml', 9)">+</button>
-<span id="Caldo de Cana 500ml">0</span>
-<button onclick="removeItem('Caldo de Cana 500ml')">-</button>
-</div>
-</div>
-</div>
-
-<div class="item">
-<div class="size-row">
-<span>1L (Jarra) - R$18,00</span>
-<div class="controls">
-<button onclick="addItem('Caldo de Cana 1L Jarra', 18)">+</button>
-<span id="Caldo de Cana 1L Jarra">0</span>
-<button onclick="removeItem('Caldo de Cana 1L Jarra')">-</button>
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- SUCO -->
-<div class="section">
-<h2>🍊 Suco</h2>
-
-<div class="item">
-<div class="size-row">
-<span>Copo - R$10,00</span>
-<div class="controls">
-<button onclick="addItem('Suco Copo', 10)">+</button>
-<span id="Suco Copo">0</span>
-<button onclick="removeItem('Suco Copo')">-</button>
-</div>
-</div>
-</div>
-
-<div class="item">
-<div class="size-row">
-<span>1L (Jarra) - R$19,00</span>
-<div class="controls">
-<button onclick="addItem('Suco 1L Jarra', 19)">+</button>
-<span id="Suco 1L Jarra">0</span>
-<button onclick="removeItem('Suco 1L Jarra')">-</button>
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- ENTREGA -->
-<div class="section">
-<h2>🚚 Tipo de Pedido</h2>
-<select id="tipoPedido" onchange="toggleEndereco()">
-<option value="Retirada">Retirada no Local</option>
-<option value="Entrega">Entrega</option>
-</select>
-
-<input type="text" id="nomeCliente" placeholder="Seu nome para identificação">
-<input type="text" id="rua" placeholder="Rua" style="display:none;">
-<input type="text" id="bairro" placeholder="Bairro" style="display:none;">
-<input type="text" id="numeroCasa" placeholder="Número da residência" style="display:none;">
-</div>
-
-<!-- PAGAMENTO -->
-<div class="section">
-<h2>💰 Forma de Pagamento</h2>
-<select id="pagamento">
-<option value="Pix">Pix</option>
-<option value="Dinheiro">Dinheiro</option>
-<option value="Cartão">Cartão</option>
-</select>
-</div>
-
-<button id="finalizar" onclick="abrirConfirmacao()">Finalizar Pedido</button>
-
-</div>
-
-<!-- MODAL CONFIRMAÇÃO -->
-<div id="modal">
-<div id="modalBox">
-<h3>📦 Confirmar Pedido</h3>
-<div id="resumoPedido"></div>
-
-<div class="modal-buttons">
-<button onclick="fecharModal()" style="background:#999;">Voltar</button>
-<button onclick="enviarWhatsApp()" style="background:green;">Confirmar</button>
-</div>
-</div>
-</div>
-
-<!-- MODAL PIX -->
-<div id="pixModal">
-  <div id="pixBox">
-    <h3>⚠️ Pagamento via PIX</h3>
-    <p>
-      Para que seu pedido seja anotado e preparado, é obrigatório enviar o
-      <strong>comprovante de pagamento</strong> no WhatsApp da loja.
-    </p>
-    <div class="modal-buttons">
-      <button onclick="fecharPixModal()" style="background:#999;">Voltar</button>
-      <button onclick="confirmarPix()">Entendi, Enviar Pedido</button>
+<!-- HEADER -->
+<div id="header">
+  <div id="logo">
+    <img src="logo.jpeg" alt="Logo O Pastelão">
+    <span>O PASTELÃO</span>
+  </div>
+</div>
+
+<!-- BOTÃO FLUTUANTE DO CARRINHO -->
+<button id="carrinho-btn" onclick="abrirCarrinho()">
+  <img src="carrinho.png" alt="Carrinho" style="height: 30px; width: 30px;">
+  <span id="carrinho-badge" style="display: none;">0</span>
+</button>
+
+<!-- VISTA DE CATEGORIAS -->
+<div id="categorias-view" class="categorias-container">
+  <div class="categoria-card" onclick="abrirCategoria('tradicionais')">
+    <div class="emoji"><img src="tradicional.png" alt="Tradicionais" style="height: 60px; width: 60px;"></div>
+    <h3>Pastéis Tradicionais</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">4 itens</p>
+  </div>
+  <div class="categoria-card" onclick="abrirCategoria('duplos')">
+    <div class="emoji"><img src="duplo.png" alt="Duplos" style="height: 60px; width: 60px;"></div>
+    <h3>Pastéis Duplos</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">19 itens</p>
+  </div>
+  <div class="categoria-card" onclick="abrirCategoria('triplos')">
+    <div class="emoji"><img src="triplo.png" alt="Triplos" style="height: 60px; width: 60px;"></div>
+    <h3>Pastéis Triplos</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">17 itens</p>
+  </div>
+  <div class="categoria-card" onclick="abrirCategoria('especiais')">
+    <div class="emoji"><img src="especial.png" alt="Especiais" style="height: 60px; width: 60px;"></div>
+    <h3>Especiais</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">8 itens</p>
+  </div>
+  <div class="categoria-card" onclick="abrirCategoria('doces')">
+       <div class="emoji"><img src="doces.png" alt="Especiais" style="height: 60px; width: 60px;"></div>
+    <h3>Doces</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">4 itens</p>
+  </div>
+  <div class="categoria-card" onclick="abrirCategoria('bebidas')">
+    <div class="emoji"><img src="bebidas.png" alt="Bebidas" style="height: 60px; width: 60px;"></div>
+    <h3>Bebidas</h3>
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">2 itens</p>
+  </div>
+</div>
+
+<!-- VISTA DE PRODUTOS -->
+<div id="produtos-view">
+  <button class="voltar-btn" onclick="voltarCategorias()">← Voltar</button>
+  <h2 id="titulo-categoria"></h2>
+  <div id="produtos-lista" class="produtos-grid"></div>
+</div>
+
+<!-- VISTA DE CARRINHO -->
+<div id="carrinho-view">
+  <button class="voltar-btn" onclick="voltarCarrinho()">← Voltar</button>
+  <h2><img src="carrinho.png" alt="Carrinho" style="height: 25px; width: 25px; vertical-align: middle; margin-right: 8px;"> Meu Carrinho</h2>
+  
+  <div id="itens-carrinho"></div>
+  
+  <div id="form-pedido">
+    <div class="form-section">
+      <h3><img src="nome.png" alt="Identificação" style="height: 20px; width: 20px; display: inline; vertical-align: middle; margin-right: 8px;"> Identificação</h3>
+      <input type="text" id="nomeCliente" placeholder="Seu nome *" required>
+    </div>
+
+    <div class="form-section">
+      <h3><img src="entrega.png" alt="Entrega" style="height: 20px; width: 20px; display: inline; vertical-align: middle; margin-right: 8px;"> Tipo de Pedido</h3>
+      <select id="tipoPedido" onchange="atualizarTotal()">
+        <option value="retirada">Retirada no Local</option>
+        <option value="entrega">Entrega</option>
+      </select>
+      
+      <div id="endereco-campos" class="endereco-hidden">
+        <input type="text" id="rua" placeholder="Rua *">
+        <input type="text" id="numeroCasa" placeholder="Número *">
+        <input type="text" id="bairro" placeholder="Bairro *">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3><img src="cartao.png" alt="Pagamento" style="height: 20px; width: 20px; display: inline; vertical-align: middle; margin-right: 8px;"> Forma de Pagamento</h3>
+      <select id="pagamento">
+        <option value="pix">PIX</option>
+        <option value="dinheiro">Dinheiro</option>
+        <option value="cartao">Cartão</option>
+      </select>
+    </div>
+
+    <div class="resumo">
+      <div class="resumo-linha">
+        <span class="resumo-label">Subtotal:</span>
+        <span class="resumo-valor" id="subtotal">R$ 0,00</span>
+      </div>
+      <div id="linha-taxa" class="resumo-linha" style="display: none;">
+        <span class="resumo-label">Taxa de Entrega:</span>
+        <span class="resumo-valor">R$ 3,00</span>
+      </div>
+      <div class="resumo-linha">
+        <span class="resumo-label resumo-total">Total:</span>
+        <span class="resumo-valor resumo-total" id="total">R$ 0,00</span>
+      </div>
+    </div>
+
+    <button class="btn-finalizar" id="finalizarBtn" onclick="abrirConfirmacao()">
+      Finalizar Pedido
+    </button>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div id="modal-confirmacao" class="modal">
+  <div class="modal-content">
+    <div class="modal-titulo"><img src="carrinho.png" alt="Confirmar" style="height: 20px; width: 20px; display: inline; vertical-align: middle; margin-right: 8px;"> Confirmar Pedido</div>
+    <div id="resumo-pedido"></div>
+    <div class="modal-botoes">
+      <button class="btn-voltar" onclick="fecharModal()">Voltar</button>
+      <button class="btn-confirmar" onclick="enviarWhatsApp()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PIX -->
+<div id="modal-pix" class="modal">
+  <div class="modal-content">
+    <div class="modal-titulo"><img src="pix.png" alt="PIX" style="height: 20px; width: 20px; display: inline; vertical-align: middle; margin-right: 8px;"> Pagamento via PIX</div>
+    <div class="pix-aviso">
+      Para que seu pedido seja anotado e preparado, é obrigatório enviar o <strong>comprovante de pagamento</strong> no WhatsApp da loja após confirmar.
+    </div>
+    <div class="modal-botoes">
+      <button class="btn-voltar" onclick="fecharModalPix()">Voltar</button>
+      <button class="btn-confirmar" onclick="confirmarPix()">Entendi, Enviar</button>
     </div>
   </div>
 </div>
 
 <script>
-let pedido = {};
-let total = 0;
+// DADOS DOS PRODUTOS
+const produtos = {
+  tradicionais: [
+    { nome: 'Carne', tamanhos: [{label: 'P', preco: 12}, {label: 'M', preco: 16}, {label: 'G', preco: 33}] },
+    { nome: 'Frango', tamanhos: [{label: 'P', preco: 12}, {label: 'M', preco: 16}, {label: 'G', preco: 33}] },
+    { nome: 'Queijo', tamanhos: [{label: 'P', preco: 12}, {label: 'M', preco: 18}, {label: 'G', preco: 33}] },
+    { nome: 'Presunto', tamanhos: [{label: 'P', preco: 12}, {label: 'M', preco: 16}, {label: 'G', preco: 33}] },
+  ],
+  duplos: [
+    { nome: 'Pizza', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Queijo', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Frango', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Palmito', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Milho', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Banana', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Carne c/ Cream Cheese', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 37}] },
+    { nome: 'Frango c/ Queijo', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Frango c/ Palmito', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Frango c/ Banana', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Frango c/ Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo c/ Banana', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo c/ Palmito', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo c/ Milho', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo c/ Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo c/ Cream Cheese', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Milho c/ Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Milho c/ Cream Cheese', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 37}] },
+  ],
+  triplos: [
+    { nome: 'Carne, Frango e Queijo', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Carne, Frango e Catupiry', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Carne, Frango e Cream Cheese', tamanhos: [{label: 'P', preco: 18}, {label: 'M', preco: 22}, {label: 'G', preco: 38}] },
+    { nome: 'Carne, Frango e Palmito', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Carne, Frango e Banana', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Carne, Milho e Catupiry', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Carne, Milho e Cream Cheese', tamanhos: [{label: 'P', preco: 18}, {label: 'M', preco: 22}, {label: 'G', preco: 38}] },
+    { nome: 'Carne, Milho e Queijo', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Queijo e Banana', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Palmito e Catupiry', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Palmito e Cream Cheese', tamanhos: [{label: 'P', preco: 18}, {label: 'M', preco: 22}, {label: 'G', preco: 38}] },
+    { nome: 'Frango, Milho e Catupiry', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Milho e Cream Cheese', tamanhos: [{label: 'P', preco: 18}, {label: 'M', preco: 22}, {label: 'G', preco: 38}] },
+    { nome: 'Frango, Queijo e Milho', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Queijo e Palmito', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'Frango, Queijo e Catupiry', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+    { nome: 'pizza c/ frango', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 36}] },
+  ],
+  especiais: [
+    { nome: 'Carne Especial', descricao: 'Carne, Presunto, Queijo e Ovo', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Torta Capixaba', descricao: 'Bacalhau e Palmito', tamanhos: [{label: 'P', preco: 16}, {label: 'M', preco: 20}, {label: 'G', preco: 37}] },
+    { nome: 'Portuguesa', descricao: 'Ovo, Presunto, Milho, Queijo e Azeitona', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Moda da Casa', descricao: 'Azeitona, Queijo, Milho, Carne Seca e Banana', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Nordestino', descricao: 'Carne Seca, Queijo, Milho e Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Queijo e Cia', descricao: 'Queijo, Milho, Tomate e Orégano', tamanhos: [{label: 'P', preco: 12}, {label: 'M', preco: 16}, {label: 'G', preco: 33}] },
+    { nome: 'Atum Especial', descricao: 'Atum, Milho, Molho Especial e Palmito', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+    { nome: 'Atum à Moda', descricao: 'Atum, Presunto, Cebola, Tomate e Catupiry', tamanhos: [{label: 'P', preco: 14}, {label: 'M', preco: 18}, {label: 'G', preco: 35}] },
+  ],
+  doces: [
+    { nome: 'Doce de Leite', tamanhos: [{label: 'P', preco: 8}, {label: 'M', preco: 12}, {label: 'G', preco: 20}] },
+    { nome: 'Banana com Canela', tamanhos: [{label: 'P', preco: 8}, {label: 'M', preco: 12}, {label: 'G', preco: 20}] },
+    { nome: 'Chocolate', tamanhos: [{label: 'P', preco: 8}, {label: 'M', preco: 12}, {label: 'G', preco: 20}] },
+    { nome: 'Goiabada', tamanhos: [{label: 'P', preco: 8}, {label: 'M', preco: 12}, {label: 'G', preco: 20}] },
+  ],
+  bebidas: [
+    { nome: 'Caldo de Cana', tamanhos: [{label: 'Copo 500ml', preco: 10}, {label: '1L (Jarra)', preco: 19}] },
+    { nome: 'Suco Natural', tamanhos: [{label: 'Copo 500ml', preco: 10}, {label: '1L (Jarra)', preco: 19}] },
+  ]
+};
+
+const categoriasNomes = {
+  tradicionais: 'Pastéis Tradicionais',
+  duplos: 'Pastéis Duplos',
+  triplos: 'Pastéis Triplos',
+  especiais: 'Especiais',
+  doces: 'Doces',
+  bebidas: 'Bebidas'
+};
+
+let carrinho = [];
 const taxaEntrega = 3;
 
-function addItem(nome, preco) {
-    pedido[nome] = pedido[nome] || { qtd: 0, preco: preco };
-    pedido[nome].qtd++;
-    document.getElementById(nome).innerText = pedido[nome].qtd;
+// NAVEGAÇÃO
+function abrirCategoria(categoria) {
+  document.getElementById('categorias-view').style.display = 'none';
+  document.getElementById('carrinho-view').style.display = 'none';
+  document.getElementById('produtos-view').style.display = 'block';
+  
+  document.getElementById('titulo-categoria').textContent = categoriasNomes[categoria];
+  renderizarProdutos(categoria);
 }
 
-function removeItem(nome) {
-    if (!pedido[nome]) return;
-    if (pedido[nome].qtd > 0) pedido[nome].qtd--;
-    document.getElementById(nome).innerText = pedido[nome].qtd;
+function voltarCategorias() {
+  document.getElementById('produtos-view').style.display = 'none';
+  document.getElementById('carrinho-view').style.display = 'none';
+  document.getElementById('categorias-view').style.display = 'grid';
 }
 
-function toggleEndereco() {
-  const tipo = document.getElementById("tipoPedido").value;
-  const rua = document.getElementById("rua");
-  const bairro = document.getElementById("bairro");
-  const numero = document.getElementById("numeroCasa");
-
-  const mostrar = tipo === "Entrega";
-  rua.style.display = mostrar ? "block" : "none";
-  bairro.style.display = mostrar ? "block" : "none";
-  numero.style.display = mostrar ? "block" : "none";
+function abrirCarrinho() {
+  document.getElementById('categorias-view').style.display = 'none';
+  document.getElementById('produtos-view').style.display = 'none';
+  document.getElementById('carrinho-view').style.display = 'block';
+  
+  renderizarCarrinho();
+  atualizarTotal();
 }
 
-function abrirConfirmacao() {
-    let resumo = "";
-    const nome = document.getElementById("nomeCliente").value;
+function voltarCarrinho() {
+  document.getElementById('carrinho-view').style.display = 'none';
+  document.getElementById('categorias-view').style.display = 'grid';
+}
+
+// RENDERIZAR PRODUTOS
+function renderizarProdutos(categoria) {
+  const lista = document.getElementById('produtos-lista');
+  lista.innerHTML = '';
+  
+  produtos[categoria].forEach((produto, idx) => {
+    const div = document.createElement('div');
+    div.className = 'produto-item';
     
-    if (nome) {
-        resumo += `<p><strong>Cliente:</strong> ${nome}</p>`;
-    }
+    let tamanhos = '';
+    produto.tamanhos.forEach((tam, tIdx) => {
+      const qtdCarrinho = carrinho.find(i => i.nome === produto.nome && i.tamanho === tam.label)?.qtd || 0;
+      tamanhos += `
+        <div class="tamanho-row">
+          <div class="tamanho-info">
+            <div class="tamanho-nome">${tam.label}</div>
+            <div class="tamanho-preco">R$ ${tam.preco.toFixed(2)}</div>
+          </div>
+          <div class="controles">
+            <button onclick="adicionarAoCarrinho('${produto.nome}', '${tam.label}', ${tam.preco}); renderizarProdutos('${categoria}')">+</button>
+            <span id="qtd-${categoria}-${idx}-${tIdx}">${qtdCarrinho}</span>
+            <button onclick="removerDoCarrinho('${produto.nome}', '${tam.label}'); renderizarProdutos('${categoria}')">-</button>
+          </div>
+        </div>
+      `;
+    });
     
-    total = 0;
-
-    for (let item in pedido) {
-        if (pedido[item].qtd > 0) {
-            let subtotal = pedido[item].qtd * pedido[item].preco;
-            total += subtotal;
-            resumo += `<p>${item} x${pedido[item].qtd} - R$ ${subtotal.toFixed(2)}</p>`;
-        }
-    }
-
-    const tipo = document.getElementById("tipoPedido").value;
-    const pagamento = document.getElementById("pagamento").value;
-
-    resumo += `<p><strong>Tipo:</strong> ${tipo}</p>`;
-
-    if (tipo === "Entrega") {
-        resumo += `<p><strong>Taxa de Entrega:</strong> R$ ${taxaEntrega.toFixed(2)}</p>`;
-        total += taxaEntrega;
-    }
-
-    resumo += `<p><strong>Pagamento:</strong> ${pagamento}</p>`;
-    resumo += `<hr><h3>Total: R$ ${total.toFixed(2)}</h3>`;
-
-    document.getElementById("resumoPedido").innerHTML = resumo;
-    document.getElementById("modal").style.display = "flex";
-}
-
-function fecharModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
-function enviarWhatsApp() {
-  const pagamento = document.getElementById("pagamento").value;
-
-  // Se for PIX, mostra o modal próprio
-  if (pagamento === "Pix") {
-    document.getElementById("pixModal").style.display = "flex";
-    return;
-  }
-
-  // Se não for PIX, envia direto
-  abrirWhatsApp();
-}
-
-function confirmarPix() {
-  fecharPixModal();
-  abrirWhatsApp();
-}
-
-function fecharPixModal() {
-  document.getElementById("pixModal").style.display = "none";
-}
-
-function abrirWhatsApp() {
-  let msg = "🧾 *Pedido Pastelaria*%0A%0A";
-
-  const nome = document.getElementById("nomeCliente").value;
-if (nome) {
-  msg += `👤 Cliente: ${nome}%0A`;
-}
-
-
-  for (let item in pedido) {
-    if (pedido[item].qtd > 0) {
-      msg += `- ${item} x${pedido[item].qtd}%0A`;
-    }
-  }
-
-  const tipo = document.getElementById("tipoPedido").value;
-  const pagamento = document.getElementById("pagamento").value;
-
-  msg += `%0A🚚 Tipo: ${tipo}%0A`;
-
-  if (tipo === "Entrega") {
-   const rua = document.getElementById("rua").value;
-    const bairro = document.getElementById("bairro").value;
-    const numero = document.getElementById("numeroCasa").value;
-    msg += `📍 Endereço: ${rua}, Bairro: ${bairro}, Nº ${numero}%0A`;
-    msg += `💸 Taxa: R$ 3,00%0A`;
-  }
-
-  msg += `💰 Pagamento: ${pagamento}%0A`;
-  msg += `🧮 Total: R$ ${total.toFixed(2)}`;
-
-  const telefone = "5527999720469"; // O PASTELÃO
-  window.open(`https://wa.me/${telefone}?text=${msg}`, "_blank");
-}
-
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({
-    behavior: 'smooth'
+    const descricao = produto.descricao ? `<div class="produto-descricao">${produto.descricao}</div>` : '';
+    
+    div.innerHTML = `
+      <div class="produto-nome">${produto.nome}</div>
+      ${descricao}
+      ${tamanhos}
+    `;
+    lista.appendChild(div);
   });
 }
 
-// Controlar visibilidade da barra de categorias ao rolar
-let lastScrollTop = 0;
-const categoriesBar = document.getElementById('categories');
-
-window.addEventListener('scroll', function() {
-  let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-  
-  if (currentScroll > lastScrollTop) {
-    // Scrollando para baixo - ocultar
-    categoriesBar.classList.add('hidden');
+// CARRINHO
+function adicionarAoCarrinho(nome, tamanho, preco) {
+  const item = carrinho.find(i => i.nome === nome && i.tamanho === tamanho);
+  if (item) {
+    item.qtd++;
   } else {
-    // Scrollando para cima - mostrar
-    categoriesBar.classList.remove('hidden');
+    carrinho.push({ nome, tamanho, preco, qtd: 1 });
+  }
+  atualizarBadgeCarrinho();
+}
+
+function removerDoCarrinho(nome, tamanho) {
+  const idx = carrinho.findIndex(i => i.nome === nome && i.tamanho === tamanho);
+  if (idx !== -1) {
+    if (carrinho[idx].qtd > 1) {
+      carrinho[idx].qtd--;
+    } else {
+      carrinho.splice(idx, 1);
+    }
+  }
+  atualizarBadgeCarrinho();
+}
+
+function atualizarBadgeCarrinho() {
+  const total = carrinho.reduce((sum, item) => sum + item.qtd, 0);
+  const badge = document.getElementById('carrinho-badge');
+  if (total > 0) {
+    badge.textContent = total;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderizarCarrinho() {
+  const container = document.getElementById('itens-carrinho');
+  
+  if (carrinho.length === 0) {
+    container.innerHTML = '<div class="carrinho-vazio">Seu carrinho está vazio <img src="carrinho.png" alt="Carrinho" style="height: 20px; width: 20px; vertical-align: middle;"></div>';
+    document.getElementById('form-pedido').style.display = 'none';
+    return;
   }
   
-  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-});
+  document.getElementById('form-pedido').style.display = 'block';
+  
+  container.innerHTML = '';
+  carrinho.forEach((item) => {
+    const div = document.createElement('div');
+    div.className = 'carrinho-item';
+    div.innerHTML = `
+      <div class="item-info">
+        <div class="item-nome">${item.nome} (${item.tamanho})</div>
+        <div class="item-qtd">Quantidade: ${item.qtd}</div>
+        <div class="item-preco">R$ ${(item.qtd * item.preco).toFixed(2)}</div>
+      </div>
+      <button class="item-remover" onclick="removerDoCarrinho('${item.nome}', '${item.tamanho}'); renderizarCarrinho(); atualizarBadgeCarrinho();">Remover</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function atualizarTotal() {
+  const subtotal = carrinho.reduce((sum, item) => sum + (item.qtd * item.preco), 0);
+  const tipo = document.getElementById('tipoPedido').value;
+  const enderecoDiv = document.getElementById('endereco-campos');
+  const linhasTaxa = document.getElementById('linha-taxa');
+  
+  if (tipo === 'entrega') {
+    enderecoDiv.classList.remove('endereco-hidden');
+    linhasTaxa.style.display = 'flex';
+    var total = subtotal + taxaEntrega;
+  } else {
+    enderecoDiv.classList.add('endereco-hidden');
+    linhasTaxa.style.display = 'none';
+    var total = subtotal;
+  }
+  
+  document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
+  document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
+}
+
+// MODAL
+function abrirConfirmacao() {
+  const nome = document.getElementById('nomeCliente').value.trim();
+  
+  if (!nome) {
+    alert('Por favor, digite seu nome');
+    return;
+  }
+  
+  if (document.getElementById('tipoPedido').value === 'entrega') {
+    const rua = document.getElementById('rua').value.trim();
+    const numero = document.getElementById('numeroCasa').value.trim();
+    const bairro = document.getElementById('bairro').value.trim();
+    if (!rua || !numero || !bairro) {
+      alert('Por favor, preencha todos os dados de endereço');
+      return;
+    }
+  }
+  
+  let resumo = `<div style="margin-bottom: 15px;">`;
+  resumo += `<p><strong><img src="logo.jpeg" alt="Cliente" style="height: 16px; width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"> Cliente:</strong> ${nome}</p>`;
+  
+  let subtotal = 0;
+  let totalItens = 0;
+  carrinho.forEach(item => {
+    const valor = item.qtd * item.preco;
+    subtotal += valor;
+    totalItens += item.qtd;
+    resumo += `<p>${item.nome} (${item.tamanho}) x${item.qtd} - R$ ${valor.toFixed(2)}</p>`;
+  });
+  
+  resumo += `<p style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;"><strong>Total de Itens:</strong> ${totalItens}</p>`;
+  
+  const tipo = document.getElementById('tipoPedido').value;
+  const pagamento = document.getElementById('pagamento').value;
+  
+  resumo += `<p><strong><img src="entrega.png" alt="Tipo" style="height: 16px; width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"> Tipo:</strong> ${tipo === 'entrega' ? 'Entrega' : 'Retirada'}</p>`;
+  
+  if (tipo === 'entrega') {
+    const rua = document.getElementById('rua').value;
+    const numero = document.getElementById('numeroCasa').value;
+    const bairro = document.getElementById('bairro').value;
+    resumo += `<p><strong><img src="entrega.png" alt="Endereço" style="height: 16px; width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"> Endereço:</strong> ${rua}, ${numero}, ${bairro}</p>`;
+    resumo += `<p><strong><img src="entrega.png" alt="Taxa" style="height: 16px; width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"> Taxa de Entrega:</strong> R$ 3,00</p>`;
+    subtotal += taxaEntrega;
+  }
+  
+  resumo += `<p><strong><img src="cartao.png" alt="Pagamento" style="height: 16px; width: 16px; display: inline; vertical-align: middle; margin-right: 4px;"> Pagamento:</strong> ${pagamento === 'pix' ? 'PIX' : pagamento === 'dinheiro' ? 'Dinheiro' : 'Cartão'}</p>`;
+  resumo += `</div>`;
+  resumo += `<div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px;">`;
+  resumo += `<p style="margin: 0; font-size: 18px; font-weight: bold; color: #ff9800;">Total: R$ ${subtotal.toFixed(2)}</p>`;
+  resumo += `</div>`;
+  
+  document.getElementById('resumo-pedido').innerHTML = resumo;
+  document.getElementById('modal-confirmacao').style.display = 'flex';
+}
+
+function fecharModal() {
+  document.getElementById('modal-confirmacao').style.display = 'none';
+}
+
+function enviarWhatsApp() {
+  const pagamento = document.getElementById('pagamento').value;
+  
+  if (pagamento === 'pix') {
+    fecharModal();
+    document.getElementById('modal-pix').style.display = 'flex';
+    return;
+  }
+  
+  enviarPedidoWhatsApp();
+}
+
+function confirmarPix() {
+  fecharModalPix();
+  enviarPedidoWhatsApp();
+}
+
+function fecharModalPix() {
+  document.getElementById('modal-pix').style.display = 'none';
+}
+
+function enviarPedidoWhatsApp() {
+  let msg = '*PEDIDO PASTELARIA*\n\n';
+  
+  const nome = document.getElementById('nomeCliente').value;
+  msg += `*Cliente:* ${nome}\n\n`;
+  
+  msg += '*Itens:*\n';
+  carrinho.forEach(item => {
+    const valor = item.qtd * item.preco;
+    msg += `• ${item.nome} (${item.tamanho}) x${item.qtd} - R$ ${valor.toFixed(2)}\n`;
+  });
+  
+  const tipo = document.getElementById('tipoPedido').value;
+  const pagamento = document.getElementById('pagamento').value;
+  
+  msg += `\n*Tipo:* ${tipo === 'entrega' ? 'Entrega' : 'Retirada'}\n`;
+  
+  if (tipo === 'entrega') {
+    const rua = document.getElementById('rua').value;
+    const numero = document.getElementById('numeroCasa').value;
+    const bairro = document.getElementById('bairro').value;
+    msg += `*Endereço:* ${rua}, ${numero}, ${bairro}\n`;
+    msg += `*Taxa de Entrega:* R$ 3,00\n`;
+  }
+  
+  let total = carrinho.reduce((sum, item) => sum + (item.qtd * item.preco), 0);
+  if (tipo === 'entrega') total += taxaEntrega;
+  
+  const formaPagamento = pagamento === 'pix' ? 'PIX' : pagamento === 'dinheiro' ? 'Dinheiro' : 'Cartão';
+  msg += `\n*Pagamento:* ${formaPagamento}\n`;
+  msg += `*Total:* R$ ${total.toFixed(2)}`;
+  
+  const telefone = '5527999720469';
+  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+  
+  // Limpar dados após envio
+  setTimeout(() => {
+    carrinho = [];
+    atualizarBadgeCarrinho();
+    document.getElementById('nomeCliente').value = '';
+    document.getElementById('rua').value = '';
+    document.getElementById('numeroCasa').value = '';
+    document.getElementById('bairro').value = '';
+    document.getElementById('tipoPedido').value = 'retirada';
+    document.getElementById('pagamento').value = 'pix';
+    voltarCategorias();
+  }, 500);
+}
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
